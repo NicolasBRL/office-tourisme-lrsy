@@ -1,8 +1,10 @@
 <?php
 
 use App\Http\Controllers\ArticleController;
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CategorieController;
 use App\Http\Controllers\LieuController;
+use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -17,11 +19,12 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+Route::post('login', [AuthController::class, 'login']);
+
+Route::middleware('auth:api')->group(function () {
+    Route::post('logout', [AuthController::class, 'logout']);
+    Route::apiResource("categories", CategorieController::class)->parameters(['categories' => 'categorie']);
+    Route::apiResource("lieux", LieuController::class)->parameters(['lieux' => 'lieu']);
+    Route::apiResource("articles", ArticleController::class);
+    Route::apiResource("users", UserController::class);
 });
-
-
-Route::apiResource("categories", CategorieController::class)->parameters(['categories' => 'categorie']);
-Route::apiResource("lieux", LieuController::class)->parameters(['lieux' => 'lieu']);
-Route::apiResource("articles", ArticleController::class);
