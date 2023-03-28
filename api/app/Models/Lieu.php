@@ -9,7 +9,7 @@ class Lieu extends Model
 {
     use HasFactory;
     protected $fillable = ['nom', 'adresse', 'ville', 'code_postal', 'longitude', 'latitude', 'categorie_id'];
-    protected $with = ['categorie'];
+    protected $table = 'lieux';
 
     public function categorie()
     {

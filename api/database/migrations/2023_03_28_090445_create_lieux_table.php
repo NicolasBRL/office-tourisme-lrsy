@@ -17,8 +17,8 @@ return new class extends Migration
             $table->string('adresse');
             $table->string('code_postal', 5);
             $table->string('ville');
-            $table->decimal('longitude', 10, 6);
-            $table->decimal('latitude', 10, 6);
+            $table->decimal('longitude', 10, 7);
+            $table->decimal('latitude', 10, 7);
 
             $table->bigInteger('categorie_id')->unsigned();
             $table->foreign('categorie_id')

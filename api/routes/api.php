@@ -1,5 +1,8 @@
 <?php
 
+use App\Http\Controllers\ArticleController;
+use App\Http\Controllers\CategorieController;
+use App\Http\Controllers\LieuController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -17,3 +20,8 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+
+Route::apiResource("categories", CategorieController::class)->parameters(['categories' => 'categorie']);
+Route::apiResource("lieux", LieuController::class)->parameters(['lieux' => 'lieu']);
+Route::apiResource("articles", ArticleController::class);
