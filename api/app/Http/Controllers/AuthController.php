@@ -19,7 +19,7 @@ class AuthController extends Controller
             return response()->json([
                 'success' => false,
                 'message' => 'Identifiant incorrect',
-            ], 401);
+            ], 422);
         }
 
         $user = Auth::user();
