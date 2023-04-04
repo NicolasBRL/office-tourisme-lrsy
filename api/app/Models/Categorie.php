@@ -12,6 +12,6 @@ class Categorie extends Model
 
     public function lieux()
     {
-        return $this->hasMany(Lieu::class);
+        return $this->belongsToMany(Lieu::class, 'lieux_categories');
     }
 }

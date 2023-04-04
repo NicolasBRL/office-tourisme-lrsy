@@ -11,7 +11,7 @@ class LieuController extends Controller
 
     public function index()
     {
-        $lieux = Lieu::with('categorie')->get()->toArray();
+        $lieux = Lieu::with('categories')->get()->toArray();
 
         return response()->json([
             'success' => true,
@@ -24,6 +24,10 @@ class LieuController extends Controller
     {
         $lieux = Lieu::create($request->all());
 
+        foreach($request->categories as $category){
+            $lieux->categories()->attach($category);
+        }
+
         return response()->json([
             'success' => true,
             'message' => 'Lieu créé',
@@ -33,7 +37,7 @@ class LieuController extends Controller
 
     public function show(Lieu $lieu)
     {
-        $lieu->categorie = $lieu->categorie;
+        $lieu->categories = $lieu->categories;
         return response()->json([
             'success' => true,
             'message' => 'Affichage du lieu',
@@ -44,6 +48,8 @@ class LieuController extends Controller
     public function update(StoreUpdateRequest $request, Lieu $lieu)
     {
         $lieu->update($request->all());
+
+        $lieu->categories()->sync($request->categories);
 
         return response()->json([
             'success' => true,

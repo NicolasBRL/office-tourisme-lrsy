@@ -1,0 +1,40 @@
+#map-container {
+  position: relative;
+  height: 500px;
+}
+#map-container
+  .mapboxgl-canvas-container.mapboxgl-touch-zoom-rotate.mapboxgl-touch-drag-pan {
+  height: 100%;
+}
+#map-container .mapboxgl-ctrl-bottom-left,
+#map-container .mapboxgl-ctrl-bottom-right {
+  display: none;
+}
+
+#map-container .mapboxgl-marker {
+  background-size: cover;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+#map-container .mapboxgl-marker .circle {
+  transform-origin: center;
+  animation: breathing 1s ease-out infinite normal;
+  animation-delay: 0.1s;
+}
+
+@keyframes breathing {
+  0%,
+  60% {
+    -webkit-transform: scale(0.9);
+    -ms-transform: scale(0.9);
+    transform: scale(0.9);
+  }
+  25% {
+    -webkit-transform: scale(1);
+    -ms-transform: scale(1);
+    transform: scale(1);
+  }
+}

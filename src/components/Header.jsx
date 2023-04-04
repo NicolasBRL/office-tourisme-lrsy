@@ -21,7 +21,7 @@ const Header = () => {
         <div className="flex items-center justify-between h-20 border-b-2 border-gray-100 md:justify-start md:space-x-6">
           <div className="inline-flex">
             <img
-              src="./assets/images/logo-lrsy.svg"
+              src="../assets/images/logo-lrsy.svg"
               alt="Logo aïoli"
               className="w-20"
             />

@@ -11,4 +11,23 @@ axiosClient.interceptors.request.use((config) => {
   return config;
 });
 
+// Vérifie si il y'a des erreurs au retour de la requête
+axiosClient.interceptors.response.use(
+  (response) => {
+    return response;
+  },
+  (error) => {
+    const { response } = error;
+    console.log(error)
+
+    // Utilisateur non authorisé ou token invalide/inéxistan
+    if (response.status === 401) {
+      localStorage.removeItem("ACCESS_TOKEN");
+      window.location.reload();
+    }
+
+    throw error;
+  }
+);
+
 export default axiosClient;

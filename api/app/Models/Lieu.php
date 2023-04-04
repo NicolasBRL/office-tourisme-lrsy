@@ -8,11 +8,11 @@ use Illuminate\Database\Eloquent\Model;
 class Lieu extends Model
 {
     use HasFactory;
-    protected $fillable = ['nom', 'adresse', 'ville', 'code_postal', 'longitude', 'latitude', 'categorie_id'];
+    protected $fillable = ['nom', 'adresse', 'ville', 'code_postal', 'longitude', 'latitude'];
     protected $table = 'lieux';
 
-    public function categorie()
+    public function categories()
     {
-        return $this->belongsTo(Categorie::class);
+        return $this->belongsToMany(Categorie::class, 'lieux_categories');
     }
 }

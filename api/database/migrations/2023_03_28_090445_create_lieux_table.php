@@ -20,13 +20,6 @@ return new class extends Migration
             $table->decimal('longitude', 10, 7);
             $table->decimal('latitude', 10, 7);
 
-            $table->bigInteger('categorie_id')->unsigned();
-            $table->foreign('categorie_id')
-                ->references('id')
-                ->on('categories')
-                ->onDelete('cascade');
-
-
             $table->timestamps();
         });
     }

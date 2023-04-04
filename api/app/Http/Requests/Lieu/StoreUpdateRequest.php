@@ -20,9 +20,9 @@ class StoreUpdateRequest extends FormRequest
             'adresse' => 'required',
             'ville' => 'required',
             'code_postal' => 'required|max:5',
-            'longitude' => 'required|numeric',
-            'latitude' => 'required|numeric',
-            'categorie_id' => 'required|exists:categories,id',
+            'longitude' => 'required',
+            'latitude' => 'required',
+            'categories' => 'exists:categories,id',
         ];
     }
 
@@ -36,8 +36,8 @@ class StoreUpdateRequest extends FormRequest
             'code_postal.max' =>  'Le champ code postal doit contenir maximum 5 caractères.',
             'longitude' =>  'Le champ longitude est obligatoire.',
             'latitude' =>  'Le champ latitude est obligatoire.',
-            'categorie_id' =>  'Le champ categorie est obligatoire.',
-            'categorie_id.exists' =>  'La catégorie renseignée n\'existe pas.',
+            'categories' =>  'Le champ categories est obligatoire.',
+            'categories.exists' =>  'La catégorie renseignée n\'existe pas.',
         ];
     }
 
