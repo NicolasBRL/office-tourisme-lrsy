@@ -17,6 +17,8 @@ import Utilisateurs from "./pages/Utilisateurs/Utilisateurs";
 import AddUtilisateur from "./pages/Utilisateurs/AddUtilisateur";
 import EditUtilisateur from "./pages/Utilisateurs/EditUtilisateur";
 import { useStateContext } from "./contexts/AuthContext";
+import Home from "./pages/Home";
+import Article from "./pages/Articles/Article";
 
 const App = () => {
   const { user } = useStateContext();
@@ -30,52 +32,55 @@ const App = () => {
   return (
     <div>
       <Routes>
-        <Route element={<DashboardLayout />}>
-          <Route path="/" element={<Dashboard />} />
+        <Route element={<DashboardLayout />} path="/dashboard">
+          <Route index={true} element={<Dashboard />} />
 
           {can("access all lieux") && (
-            <Route path="/lieux" element={<Lieux />} />
+            <Route path="lieux" element={<Lieux />} />
           )}
-          {can("access create lieux") && (
-            <Route path="/lieux/add" element={<AddLieu />} />
+          {can("create lieux") && (
+            <Route path="lieux/add" element={<AddLieu />} />
           )}
-          {can("access update lieux") && (
-            <Route path="/lieux/:lieu" element={<EditLieu />} />
+          {can("update lieux") && (
+            <Route path="lieux/:lieu" element={<EditLieu />} />
           )}
 
           {can("access all categories") && (
-            <Route path="/categories" element={<Categories />} />
+            <Route path="categories" element={<Categories />} />
           )}
-          {can("access create categories") && (
-            <Route path="/categories/add" element={<AddCategorie />} />
+          {can("create categories") && (
+            <Route path="categories/add" element={<AddCategorie />} />
           )}
-          {can("access update categories") && (
-            <Route path="/categories/:categorie" element={<EditCategorie />} />
+          {can("update categories") && (
+            <Route path="categories/:categorie" element={<EditCategorie />} />
           )}
 
           {can("access all articles") && (
-            <Route path="/articles" element={<Articles />} />
+            <Route path="articles" element={<Articles />} />
           )}
-          {can("access create articles") && (
-            <Route path="/articles/add" element={<AddArticles />} />
+          {can("create articles") && (
+            <Route path="articles/add" element={<AddArticles />} />
           )}
-          {can("access update articles") && (
-            <Route path="/articles/:article" element={<EditArticles />} />
+          {can("update articles") && (
+            <Route path="articles/:article" element={<EditArticles />} />
           )}
 
           {can("access all users") && (
-            <Route path="/utilisateurs" element={<Utilisateurs />} />
+            <Route path="utilisateurs" element={<Utilisateurs />} />
           )}
-          {can("access create users") && (
-            <Route path="/utilisateurs/add" element={<AddUtilisateur />} />
+          {can("create users") && (
+            <Route path="utilisateurs/add" element={<AddUtilisateur />} />
           )}
-          {can("access update users") && (
-            <Route path="/utilisateurs/:user" element={<EditUtilisateur />} />
+          {can("update users") && (
+            <Route path="utilisateurs/:user" element={<EditUtilisateur />} />
           )}
         </Route>
         <Route element={<GuestLayout />}>
           <Route path="/login" element={<Login />} />
         </Route>
+
+            <Route path="/" element={<Home />} />
+            <Route path="/blog/:article" element={<Article />} />
       </Routes>
     </div>
   );

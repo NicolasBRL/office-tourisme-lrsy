@@ -27,7 +27,7 @@ const Articles = () => {
           Liste des articles
         </h1>
         <Link
-          to="/articles/add"
+          to="/dashboard/articles/add"
           className="inline-flex items-center text-white focus:outline-none focus:ring-4 font-medium rounded-lg text-sm px-5 py-2.5 ml-auto bg-primary-600 hover:bg-primary-700 focus:ring-primary-700 border-primary-700 open-modal"
         >
           <svg
@@ -100,7 +100,7 @@ const Articles = () => {
 
                   <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
                     <Link
-                      to={`/articles/${article.id}`}
+                      to={`/dashboard/articles/${article.id}`}
                       className="font-medium text-primary-700"
                     >
                       <svg

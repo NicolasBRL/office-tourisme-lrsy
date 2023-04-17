@@ -73,7 +73,7 @@ const EditLieu = () => {
     e.preventDefault();
 
     const formData = new FormData(); 
-    formData.append("-method", 'PUT');
+    formData.append("_method", 'PUT');
     formData.append("nom", nomRef.current.value);
     formData.append("adresse", adresseRef.current.value);
     formData.append("code_postal", codePostalRef.current.value);
@@ -84,13 +84,14 @@ const EditLieu = () => {
     imagesLieu.map((image, i) => formData.append('imagesLieu[]', image));
     removedFiles.map((remove, i) => formData.append('removedFiles[]', remove));
 
+    console.log(imagesLieu)
 
     axiosClient
       .post(`lieux/${lieu}`, formData, {
           headers: { "Content-Type": "multipart/form-data" },
         }
       )
-      .then(response => (response.data.success) ? navigate('/lieux') : console.log(response.data))
+      .then(response => (response.data.success) ? navigate('/dashboard/lieux') : console.log(response.data))
       .catch((e) => {
         console.log(e);
       });
@@ -115,7 +116,7 @@ const EditLieu = () => {
       <div className="mb-6 flex gap-8">
         <div className="w-1/2">
           <label className="block mb-2 text-sm font-medium text-gray-900">
-            Addresse
+            Adresse
           </label>
           <input
             type="text"

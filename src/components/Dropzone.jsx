@@ -22,7 +22,7 @@ const Dropzone = ({
           })
         ),
       ]);
-
+      console.log(acceptedFiles)
       setInputFiles((prevState) => [...prevState, acceptedFiles[0]]);
     },
   });

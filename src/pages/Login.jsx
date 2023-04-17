@@ -1,12 +1,16 @@
 import React, { useRef, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import axios from "../axios";
 import { useStateContext } from "../contexts/AuthContext";
+import Logo from "../components/Logo";
+
 
 const Login = () => {
   const emailRef = useRef();
   const passwordRef = useRef();
   const { setAuthToken, getUser } = useStateContext();
   const [errors, setErrors] = useState(null);
+  const navigate = useNavigate();
 
   const handleLogin = (e) => {
     e.preventDefault(); // Annule l'évènement par défaut
@@ -23,6 +27,7 @@ const Login = () => {
       .then(({ data }) => {
         getUser()
         setAuthToken(data.authorisation.token);
+        navigate('/dashboard')
       })
       .catch((e) => {
         if (e.response.status === 422) {
@@ -35,11 +40,7 @@ const Login = () => {
     <section className="bg-gray-50">
       <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
         <a href="/" className="flex items-center mb-6">
-          <img
-            className="w-40 mr-2"
-            src="../assets/images/logo-lrsy.svg"
-            alt="logo"
-          />
+          <Logo className="w-40 mr-2" />
         </a>
         <div className="w-full bg-white rounded-lg shadow md:mt-0 sm:max-w-md xl:p-0">
           <div className="p-6 space-y-4 md:space-y-6 sm:p-8">

@@ -7,7 +7,8 @@ import PlaceMarker from "./Marker";
 mapboxgl.accessToken =
   "pk.eyJ1Ijoibmljb2xhcy1haW9saSIsImEiOiJjbGJ4cHNvZmoxY3ZxM3Z0MHFudHFub29nIn0.78TlSfiHCd9KxMECYt4a0w";
 
-const PlaceMap = ({ markers }) => {
+const PlaceMap = React.forwardRef(({markers}, mapRef) => {
+  
   return (
     <Map
       initialViewState={{
@@ -16,6 +17,7 @@ const PlaceMap = ({ markers }) => {
         zoom: 14,
         minZoom: 10,
       }}
+      ref={mapRef}
       mapStyle="mapbox://styles/mapbox/streets-v9"
     >
       {markers && markers.map((marker, index) => (
@@ -23,6 +25,6 @@ const PlaceMap = ({ markers }) => {
       ))}
     </Map>
   );
-};
+});
 
 export default PlaceMap;

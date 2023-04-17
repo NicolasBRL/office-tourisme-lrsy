@@ -58,6 +58,17 @@ class ArticleController extends Controller
         ]);
     }
 
+    public function getArticle($slug)
+    {
+        $article = Article::where('slug', $slug)->firstOrFail();
+        $article->lieux = $article->lieux;
+        return response()->json([
+            'success' => true,
+            'message' => 'Affichage de l\'article',
+            'article' => $article
+        ]);
+    }
+
     public function update(UpdateRequest $request, Article $article)
     {
         if ($request->hasFile('url_image')) {

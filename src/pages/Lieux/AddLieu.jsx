@@ -61,7 +61,7 @@ const AddLieu = () => {
       formData.append("categories[]", categorie)
     );
     imagesLieu.map((image, i) => formData.append("imagesLieu[]", image));
-
+    console.log(imagesLieu)
     axiosClient
       .post("/lieux", formData, {
         headers: { "Content-Type": "multipart/form-data" },
@@ -92,7 +92,7 @@ const AddLieu = () => {
       <div className="mb-6 flex gap-8">
         <div className="w-1/2">
           <label className="block mb-2 text-sm font-medium text-gray-900">
-            Addresse
+            Adresse
           </label>
           <input
             type="text"

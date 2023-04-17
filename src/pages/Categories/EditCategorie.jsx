@@ -27,7 +27,7 @@ const EditCategorie = () => {
     e.preventDefault();
 
     await axiosClient.put(`/categories/${categorie}`, {nom: nomRef.current.value}).then(
-        navigate('/categories')
+        navigate('/dashboard/categories')
     )
   }
 

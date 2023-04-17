@@ -63,7 +63,7 @@ const EditArticles = () => {
       .post(`/articles/${article}`, formData, {
         headers: { "Content-Type": "multipart/form-data" },
       })
-      .then(response => (response.data.success) ? navigate('/articles') : console.log(response.data))
+      .then(response => (response.data.success) ? navigate('/dashboard/articles') : console.log(response.data))
       .catch((e) => {
         console.log(e);
       });

@@ -25,7 +25,7 @@ const EditUtilisateur = () => {
 
     axiosClient.put(`/users/${user}`, {email: emailRef.current.value, password: passwordRef.current.value})
     .then(
-        response => (response.data.success) ? navigate('/utilisateurs') : console.log(response.data)
+        response => (response.data.success) ? navigate('/dashboard/utilisateurs') : console.log(response.data)
     ).catch((e) => {
       console.log(e);
     });

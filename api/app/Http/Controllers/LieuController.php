@@ -13,7 +13,7 @@ class LieuController extends Controller
 
     public function index()
     {
-        $lieux = Lieu::with('categories')->get()->toArray();
+        $lieux = Lieu::with('categories', 'images')->get()->toArray();
 
         return response()->json([
             'success' => true,

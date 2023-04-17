@@ -40,6 +40,7 @@ class StoreUpdateRequest extends FormRequest
             'latitude' =>  'Le champ latitude est obligatoire.',
             'categories' =>  'Le champ categories est obligatoire.',
             'categories.exists' =>  'La catégorie renseignée n\'existe pas.',
+            'imagesLieu.*.max' => 'Trop lourds'
         ];
     }
 

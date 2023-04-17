@@ -38,3 +38,10 @@
     transform: scale(1);
   }
 }
+
+
+// Home
+#home #map-container {
+  position: relative;
+  height: calc(100vh - 100px);
+}

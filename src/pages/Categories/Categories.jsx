@@ -26,7 +26,7 @@ const Categories = () => {
           Liste des catégories
         </h1>
         <Link
-          to="/categories/add"
+          to="/dashboard/categories/add"
           className="inline-flex items-center text-white focus:outline-none focus:ring-4 font-medium rounded-lg text-sm px-5 py-2.5 ml-auto bg-primary-600 hover:bg-primary-700 focus:ring-primary-700 border-primary-700 open-modal"
         >
           <svg
@@ -91,7 +91,7 @@ const Categories = () => {
                 </td>
                 <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
                   <Link
-                    to={`/categories/${category.id}`}
+                    to={`/dashboard/categories/${category.id}`}
                     className="font-medium text-primary-700"
                   >
                     <svg

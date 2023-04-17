@@ -5,6 +5,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CategorieController;
 use App\Http\Controllers\LieuController;
 use App\Http\Controllers\UserController;
+use App\Models\Article;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Route;
@@ -22,7 +23,9 @@ use Illuminate\Support\Facades\Route;
 
 Route::post('login', [AuthController::class, 'login']);
 
-
+Route::get('blogs', [ArticleController::class, 'index']);
+Route::get('blog/{slug}', [ArticleController::class, 'getArticle']);
+Route::get('home', [LieuController::class, 'index']);
 
 Route::middleware('auth:api')->group(function () {
     Route::get('/user', [UserController::class, 'user']);
