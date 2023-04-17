@@ -5,7 +5,7 @@ import { useStateContext } from "../contexts/AuthContext";
 const Login = () => {
   const emailRef = useRef();
   const passwordRef = useRef();
-  const { setUser, setAuthToken } = useStateContext();
+  const { setAuthToken, getUser } = useStateContext();
   const [errors, setErrors] = useState(null);
 
   const handleLogin = (e) => {
@@ -21,7 +21,7 @@ const Login = () => {
     axios
       .post("/login", payload)
       .then(({ data }) => {
-        setUser(data.user);
+        getUser()
         setAuthToken(data.authorisation.token);
       })
       .catch((e) => {

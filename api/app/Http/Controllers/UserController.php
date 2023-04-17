@@ -65,4 +65,12 @@ class UserController extends Controller
             'message' => 'Utilisateur supprimé',
         ]);
     }
+
+    public function user(Request $request)
+    {
+        $request->user()->role = $request->user()->getRoleNames();
+        $request->user()->permissions = $request->user()->getPermissionsViaRoles()->pluck("name");
+        
+        return $request->user();
+    }
 }

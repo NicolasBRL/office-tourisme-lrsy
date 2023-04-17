@@ -44,6 +44,7 @@ export const AuthProvider = ({ children }) => {
         setUser,
         authToken,
         setAuthToken,
+        getUser,
       }}
     >
       {children}

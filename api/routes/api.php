@@ -25,9 +25,7 @@ Route::post('login', [AuthController::class, 'login']);
 
 
 Route::middleware('auth:api')->group(function () {
-    Route::get('/user', function (Request $request) {
-        return $request->user();
-    });
+    Route::get('/user', [UserController::class, 'user']);
     
     Route::post('logout', [AuthController::class, 'logout']);
     Route::apiResource("categories", CategorieController::class)->parameters(['categories' => 'categorie']);
