@@ -10,6 +10,12 @@ import AddCategorie from "./pages/Categories/AddCategorie";
 import EditCategorie from "./pages/Categories/EditCategorie";
 import Categories from "./pages/Categories/Categories";
 import EditLieu from "./pages/Lieux/EditLieu";
+import Articles from "./pages/Articles/Articles";
+import AddArticles from "./pages/Articles/AddArticles";
+import EditArticles from "./pages/Articles/EditArticles";
+import Utilisateurs from "./pages/Utilisateurs/Utilisateurs";
+import AddUtilisateur from "./pages/Utilisateurs/AddUtilisateur";
+import EditUtilisateur from "./pages/Utilisateurs/EditUtilisateur";
 
 const App = () => {
   return (
@@ -24,6 +30,14 @@ const App = () => {
           <Route path="/categories" element={<Categories />} />
           <Route path="/categories/add" element={<AddCategorie />} />
           <Route path="/categories/:categorie" element={<EditCategorie />} />
+
+          <Route path="/articles" element={<Articles />} />
+          <Route path="/articles/add" element={<AddArticles />} />
+          <Route path="/articles/:article" element={<EditArticles />} />
+
+          <Route path="/utilisateurs" element={<Utilisateurs />} />
+          <Route path="/utilisateurs/add" element={<AddUtilisateur />} />
+          <Route path="/utilisateurs/:user" element={<EditUtilisateur />} />
         </Route>
         <Route element={<GuestLayout />}>
           <Route path="/login" element={<Login />} />

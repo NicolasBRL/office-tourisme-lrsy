@@ -15,4 +15,9 @@ class Lieu extends Model
     {
         return $this->belongsToMany(Categorie::class, 'lieux_categories');
     }
+
+    public function images()
+    {
+        return $this->hasMany(ImageLieu::class);
+    }
 }

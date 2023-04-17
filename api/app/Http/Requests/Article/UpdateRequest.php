@@ -16,7 +16,7 @@ class UpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'slug' => 'unique:articles,slug|regex:/^[a-z0-9]+(?:-[a-z0-9]+)*$/',
+            'slug' => 'unique:articles,slug,'.$this->article->id.'|regex:/^[a-z0-9]+(?:-[a-z0-9]+)*$/',
             'lieu_id' => 'exists:lieux,id',
         ];
     }
@@ -35,7 +35,8 @@ class UpdateRequest extends FormRequest
         throw new HttpResponseException(response()->json([
             'success'   => false,
             'message'   => 'Erreurs lors de l\'envoie du formulaire.',
-            'data'      => $validator->errors()
+            'data'      => $validator->errors(),
+            'test' => 'test'
         ]));
     }
 }

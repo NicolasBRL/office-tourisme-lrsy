@@ -61,7 +61,7 @@ class ArticleController extends Controller
     public function update(UpdateRequest $request, Article $article)
     {
         if ($request->hasFile('url_image')) {
-            Storage::delete('upload/' . $article->url_image);
+            Storage::delete('public/uploads/' . $article->url_image);
 
             // On récupère le nom du fichier avec son extension
             $filenameWithExt = $request->file('url_image')->getClientOriginalName();

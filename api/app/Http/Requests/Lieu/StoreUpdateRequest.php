@@ -5,6 +5,7 @@ namespace App\Http\Requests\Lieu;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
+use Illuminate\Validation\Rules\File;
 
 class StoreUpdateRequest extends FormRequest
 {
@@ -23,6 +24,7 @@ class StoreUpdateRequest extends FormRequest
             'longitude' => 'required',
             'latitude' => 'required',
             'categories' => 'exists:categories,id',
+            'imagesLieu.*' => [File::image()->max(12 * 1024)]
         ];
     }
 
@@ -46,7 +48,7 @@ class StoreUpdateRequest extends FormRequest
         throw new HttpResponseException(response()->json([
             'success'   => false,
             'message'   => 'Erreurs lors de l\'envoie du formulaire.',
-            'data'      => $validator->errors()
+            'data'      => $validator->errors(),
         ]));
     }
 }

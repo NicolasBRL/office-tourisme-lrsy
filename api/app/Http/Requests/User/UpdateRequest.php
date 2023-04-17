@@ -19,6 +19,7 @@ class UpdateRequest extends FormRequest
         return [
             'email' => 'email:rfc,dns|unique:users,email',
             'password' => [
+                'nullable',
                 Password::min(8)
                 ->mixedCase()
                 ->letters()

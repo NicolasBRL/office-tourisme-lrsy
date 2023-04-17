@@ -4,6 +4,7 @@ import { Map, Marker } from "react-map-gl";
 import "mapbox-gl/dist/mapbox-gl.css";
 import axiosClient from "../../axios";
 import { useNavigate } from "react-router-dom";
+import Dropzone from "../../components/Dropzone";
 
 mapboxgl.accessToken =
   "pk.eyJ1Ijoibmljb2xhcy1haW9saSIsImEiOiJjbGJ4cHNvZmoxY3ZxM3Z0MHFudHFub29nIn0.78TlSfiHCd9KxMECYt4a0w";
@@ -13,6 +14,8 @@ const AddLieu = () => {
   const [lat, setLat] = useState(0);
   const [categories, setCategories] = useState([]);
   const [categoriesChecked, setCategoriesChecked] = useState([]);
+  const [files, setFiles] = useState([]);
+  const [imagesLieu, setImagesLieu] = useState([]);
   const nomRef = useRef();
   const adresseRef = useRef();
   const codePostalRef = useRef();
@@ -39,32 +42,42 @@ const AddLieu = () => {
 
     if (checked && !categoriesChecked.includes(id)) {
       setCategoriesChecked([...categoriesChecked, parseInt(id)]);
-    }else{
+    } else {
       setCategoriesChecked(categoriesChecked.filter((e) => e != id));
     }
-  }
+  };
 
   const addLieu = (e) => {
     e.preventDefault();
-    const payload = {
-      nom: nomRef.current.value,
-      adresse: adresseRef.current.value,
-      code_postal: codePostalRef.current.value,
-      ville: villeRef.current.value,
-      longitude: lng,
-      latitude: lat,
-      categories: categoriesChecked
-    }
-    console.log(payload);
-    axiosClient.post("/lieux", payload)
-    .then(navigate('/lieux'))
-    .catch((e) => {
-      console.log(e)
-    });
+
+    const formData = new FormData();
+    formData.append("nom", nomRef.current.value);
+    formData.append("adresse", adresseRef.current.value);
+    formData.append("code_postal", codePostalRef.current.value);
+    formData.append("ville", villeRef.current.value);
+    formData.append("longitude", lng);
+    formData.append("latitude", lat);
+    categoriesChecked.map((categorie) =>
+      formData.append("categories[]", categorie)
+    );
+    imagesLieu.map((image, i) => formData.append("imagesLieu[]", image));
+
+    axiosClient
+      .post("/lieux", formData, {
+        headers: { "Content-Type": "multipart/form-data" },
+      })
+      .then(response => (response.data.success) ? navigate('/lieux') : console.log(response.data))
+      .catch((e) => {
+        console.log(e);
+      });
   };
 
   return (
-    <form onSubmit={addLieu} className="p-6 bg-white border border-gray-200 rounded-lg my-5">
+    <form
+      onSubmit={addLieu}
+      className="p-6 bg-white border border-gray-200 rounded-lg my-5"
+      encType="multipart/form-data"
+    >
       <div className="mb-6">
         <label className="block mb-2 text-sm font-medium text-gray-900">
           Nom du lieu
@@ -182,7 +195,8 @@ const AddLieu = () => {
               key={i}
               className={`w-1/4 border-gray-200 flex
           ${
-            ((categories.length % 4 != 0) && (i+1) <= categories.length - (categories.length % 4))
+            categories.length % 4 != 0 &&
+            i + 1 <= categories.length - (categories.length % 4)
               ? "border-b"
               : ""
           }
@@ -191,8 +205,8 @@ const AddLieu = () => {
             >
               <div className="flex p-2 pl-3">
                 <div className="flex items-center h-5">
-                  <input 
-                    type="checkbox" 
+                  <input
+                    type="checkbox"
                     id={category.id}
                     name="categories[]"
                     checked={categoriesChecked.includes(category.id)}
@@ -201,12 +215,28 @@ const AddLieu = () => {
                   />
                 </div>
                 <div className="ml-2 text-sm">
-                    <label htmlFor={category.id} className="font-medium text-gray-900 cursor-pointer">{category.nom}</label>
+                  <label
+                    htmlFor={category.id}
+                    className="font-medium text-gray-900 cursor-pointer"
+                  >
+                    {category.nom}
+                  </label>
                 </div>
               </div>
             </li>
           ))}
         </ul>
+      </div>
+
+      <div className="mb-6">
+        <label className="block mb-2 text-sm font-medium text-gray-900">
+          Photos
+        </label>
+        <Dropzone
+          files={files}
+          setFiles={setFiles}
+          setInputFiles={setImagesLieu}
+        />
       </div>
 
       <button className="inline-flex items-center text-white focus:outline-none focus:ring-4 font-medium rounded-lg text-sm px-5 py-2.5 ml-auto bg-primary-600 hover:bg-primary-700 focus:ring-primary-700 border-primary-700">

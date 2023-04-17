@@ -6,6 +6,7 @@ use App\Http\Controllers\CategorieController;
 use App\Http\Controllers\LieuController;
 use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -31,6 +32,7 @@ Route::middleware('auth:api')->group(function () {
     Route::post('logout', [AuthController::class, 'logout']);
     Route::apiResource("categories", CategorieController::class)->parameters(['categories' => 'categorie']);
     Route::apiResource("lieux", LieuController::class)->parameters(['lieux' => 'lieu']);
+    Route::post('lieux/{lieu}', [LieuController::class, 'update'])->name('lieux.update');
     Route::apiResource("articles", ArticleController::class);
     Route::apiResource("users", UserController::class);
 });

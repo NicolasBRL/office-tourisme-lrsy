@@ -4,6 +4,7 @@ import { Map, Marker } from "react-map-gl";
 import "mapbox-gl/dist/mapbox-gl.css";
 import axiosClient from "../../axios";
 import { useNavigate, useParams } from "react-router-dom";
+import Dropzone from "../../components/Dropzone";
 
 mapboxgl.accessToken =
   "pk.eyJ1Ijoibmljb2xhcy1haW9saSIsImEiOiJjbGJ4cHNvZmoxY3ZxM3Z0MHFudHFub29nIn0.78TlSfiHCd9KxMECYt4a0w";
@@ -14,6 +15,9 @@ const EditLieu = () => {
     const [lat, setLat] = useState(0);
     const [categories, setCategories] = useState([]);
     const [categoriesChecked, setCategoriesChecked] = useState([]);
+    const [files, setFiles] = useState([]);
+    const [imagesLieu, setImagesLieu] = useState([]);
+    const [removedFiles, setRemovedFiles] = useState([]);
     const nomRef = useRef();
     const adresseRef = useRef();
     const codePostalRef = useRef();
@@ -47,6 +51,7 @@ const EditLieu = () => {
         setLng(res.data.lieu.longitude);
         setLat(res.data.lieu.latitude);
         setCategoriesChecked(res.data.lieu.categories.map(categorie => categorie.id));
+        setFiles(res.data.lieu.images)
       })
 
       .catch((error) => {
@@ -66,27 +71,36 @@ const EditLieu = () => {
 
   const updateLieu = (e) => {
     e.preventDefault();
-    const payload = {
-      nom: nomRef.current.value,
-      adresse: adresseRef.current.value,
-      code_postal: codePostalRef.current.value,
-      ville: villeRef.current.value,
-      longitude: lng,
-      latitude: lat,
-      categories: categoriesChecked
-    }
-    console.log(payload);
-    axiosClient.put(`/lieux/${lieu}`, payload)
-    .then((navigate('/lieux')))
-    .catch((e) => {
-      console.log(e)
-    });
+
+    const formData = new FormData(); 
+    formData.append("-method", 'PUT');
+    formData.append("nom", nomRef.current.value);
+    formData.append("adresse", adresseRef.current.value);
+    formData.append("code_postal", codePostalRef.current.value);
+    formData.append("ville", villeRef.current.value);
+    formData.append("longitude", lng);
+    formData.append("latitude", lat);
+    categoriesChecked.map(categorie => formData.append("categories[]", categorie))
+    imagesLieu.map((image, i) => formData.append('imagesLieu[]', image));
+    removedFiles.map((remove, i) => formData.append('removedFiles[]', remove));
+
+
+    axiosClient
+      .post(`lieux/${lieu}`, formData, {
+          headers: { "Content-Type": "multipart/form-data" },
+        }
+      )
+      .then(response => (response.data.success) ? navigate('/lieux') : console.log(response.data))
+      .catch((e) => {
+        console.log(e);
+      });
   };
 
 
   
   return (
-    <form onSubmit={updateLieu} className="p-6 bg-white border border-gray-200 rounded-lg my-5">
+    <form onSubmit={updateLieu} className="p-6 bg-white border border-gray-200 rounded-lg my-5"
+    encType="multipart/form-data">
       <div className="mb-6">
         <label className="block mb-2 text-sm font-medium text-gray-900">
           Nom du lieu
@@ -229,6 +243,18 @@ const EditLieu = () => {
             </li>
           ))}
         </ul>
+      </div>
+
+      <div className="mb-6">
+        <label className="block mb-2 text-sm font-medium text-gray-900">
+          Photos
+        </label>
+        <Dropzone
+          files={files}
+          setFiles={setFiles}
+          setInputFiles={setImagesLieu}
+          setRemovedFiles={setRemovedFiles}
+        />
       </div>
 
       <button className="inline-flex items-center text-white focus:outline-none focus:ring-4 font-medium rounded-lg text-sm px-5 py-2.5 ml-auto bg-primary-600 hover:bg-primary-700 focus:ring-primary-700 border-primary-700">
